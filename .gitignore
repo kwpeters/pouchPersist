@@ -1,0 +1,17 @@
+# Emacs temp files.
+.tern-port
+
+# Mac OS X files that are not needed.
+*.DS_Store
+
+# IDE specific Files
+.idea
+
+# 3rd party libraries
+/node_modules/
+/typings/
+
+# Build generated files
+/dist/
+/artifacts/
+/build/
