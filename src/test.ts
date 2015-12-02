@@ -13,6 +13,8 @@ let origItem: Item = new Item("my new item");
 let doc:interfaces.IDocument = serializationRegistry.serialize(origItem);
 
 // Deserialize it.
-let rehydrated: interfaces.ISerializable = serializationRegistry.deserialize(doc);
+//let rehydrated: interfaces.ISerializable = serializationRegistry.deserialize(doc);
+let rehydrated: Item = serializationRegistry.deserialize<Item>(doc);
 
 console.log("After round trip, I have an Item:", rehydrated);
+console.log(rehydrated.name);

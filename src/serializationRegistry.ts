@@ -8,12 +8,12 @@ export class SerializationRegistry {
         this._registry = {};
     }
 
-    public registerType(typeId: string, deserializer: IDeserializer): boolean {
+    public registerType<T extends ISerializable>(typeId: string, deserializer: IDeserializer<T>): void {
 
         // If this registry already has the specified type registered, return
         // false;
         if (this._registry[typeId]) {
-            return false;
+            throw new Error("Type " + typeId + " is already registered.");
         }
 
         this._registry[typeId] = deserializer;
@@ -52,13 +52,13 @@ export class SerializationRegistry {
         return doc;
     }
 
-    public deserialize(doc: IDocument): ISerializable {
+    public deserialize<T extends ISerializable>(doc: IDocument): T {
         if (!this._registry[doc.typeId]) {
             throw new Error("Unknown type " + doc.typeId);
         }
 
-        let deserializer: IDeserializer = this._registry[doc.typeId];
-        let rehydratedObj: ISerializable = deserializer(doc.schema, doc.pojo);
+        let deserializer: IDeserializer<T> = this._registry[doc.typeId];
+        let rehydratedObj: T = deserializer(doc.schema, doc.pojo);
 
         // Put serialization metadata onto the object.
         rehydratedObj.serializationMetadata = {_id: doc._id, _rev: doc._rev};

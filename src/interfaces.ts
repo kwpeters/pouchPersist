@@ -4,7 +4,7 @@ export interface ISerializeInfo {
     pojo:   any;
 }
 
-export interface IDocument{
+export interface IDocument {
     schema: number;
     pojo:   any;
     typeId: string;
@@ -27,6 +27,6 @@ export interface ISerializable {
 }
 
 
-export interface IDeserializer {
-    (schema: number, pojo: any): ISerializable;
+export interface IDeserializer<T extends ISerializable> {
+    (schema: number, pojo: any): T;
 }

@@ -5,7 +5,7 @@ import {SerializationRegistry} from "./serializationRegistry";
 const TYPE_ID_ITEM:string = "item";
 
 
-function deserializeItem(schema:number, pojo:any):Item {
+function deserializeItem(schema:number, pojo:any): Item {
     "use strict";
 
     let newItem: Item;
@@ -27,8 +27,8 @@ export class Item implements ISerializable {
 
     private _name: string;
 
-    public static register(serializationRegistry:SerializationRegistry):boolean {
-        return serializationRegistry.registerType(TYPE_ID_ITEM, deserializeItem);
+    public static register(serializationRegistry:SerializationRegistry):void {
+        serializationRegistry.registerType(TYPE_ID_ITEM, deserializeItem);
     }
 
 
