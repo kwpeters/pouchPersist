@@ -21,6 +21,9 @@
     "gulp-sourcemaps": "1.6.0",
     "gulp-typescript": "2.9.2",
     "gulp-util": "3.0.7",
-    "merge-stream": "^1.0.0"
+    "merge-stream": "1.0.0"
+  },
+  "dependencies": {
+    "lodash": "3.10.1"
   }
 }
