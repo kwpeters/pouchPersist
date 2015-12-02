@@ -1,4 +1,4 @@
-import {ISerializable, ISerializeInfo, IDeserializer, IDocument, DOCUMENT_BLANK} from "./interfaces";
+import {ISerializable, ISerializeInfo, IDeserializer, IDocument, getBlankDocument} from "./interfaces";
 
 export class SerializationRegistry {
 
@@ -19,10 +19,10 @@ export class SerializationRegistry {
         this._registry[typeId] = deserializer;
     }
 
-    public serialize(obj:ISerializable):IDocument {
+    public serialize(obj: ISerializable):IDocument {
 
         // Build the document to be persisted.
-        let doc:IDocument = DOCUMENT_BLANK;
+        let doc:IDocument = getBlankDocument();
         let serializeInfo: ISerializeInfo = obj.serialize();
 
         doc.schema = serializeInfo.schema;

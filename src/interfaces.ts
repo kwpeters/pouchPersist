@@ -12,7 +12,12 @@ export interface IDocument {
     _rev?:  string;
 }
 
-export const DOCUMENT_BLANK:IDocument = {schema: 0, pojo: undefined, typeId: "", _id: "", _rev: ""};
+
+export function getBlankDocument(): IDocument {
+    "use strict";
+    return {schema: 0, pojo: undefined, typeId: "", _id: "", _rev: ""};
+}
+
 
 export interface ISerializationMetadata {
     _id: string;
