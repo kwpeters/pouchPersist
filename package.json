@@ -1,0 +1,26 @@
+{
+  "name": "pouchPersist",
+  "version": "1.0.0",
+  "description": "Persistence layer using PouchDB",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kwpeters/pouchPersist.git"
+  },
+  "author": "Kevin Peters <kwpeters@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kwpeters/pouchPersist/issues"
+  },
+  "homepage": "https://github.com/kwpeters/pouchPersist",
+  "devDependencies": {
+    "gulp": "3.9.0",
+    "gulp-sourcemaps": "1.6.0",
+    "gulp-typescript": "2.9.2",
+    "gulp-util": "3.0.7",
+    "merge-stream": "^1.0.0"
+  }
+}
