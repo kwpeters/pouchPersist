@@ -2,23 +2,32 @@ import * as interfaces  from "./interfaces";
 import {SerializationRegistry} from "./serializationRegistry";
 import {Item} from "./item";
 import {Store} from "./store";
+import {StoreLocation} from "./storeLocation";
 
+// Setup the serialization registry.
 let serializationRegistry: SerializationRegistry = new SerializationRegistry();
 Item.register(serializationRegistry);
 Store.register(serializationRegistry);
+StoreLocation.register(serializationRegistry);
+
+
+
+
+
 
 
 // The original object.
-let origItem: Item = new Item("my new item");
-let origStore:Store = new Store("my new store");
+let origStore:Store = new Store("Heinens");
+origStore.appendStoreLocation(new StoreLocation("Produce"));
+origStore.appendStoreLocation(new StoreLocation("Healthcare"));
+origStore.appendStoreLocation(new StoreLocation("Breakfast"));
 
 // Serialize it.
-let itemDoc:interfaces.IDocument = serializationRegistry.serialize(origItem);
 let storeDoc:interfaces.IDocument = serializationRegistry.serialize(origStore);
+console.log(JSON.stringify(storeDoc, null, 2));
 
 // Deserialize it.
-let rehydratedItem: Item = serializationRegistry.deserialize<Item>(itemDoc);
-let rehydratedStore: Store = serializationRegistry.deserialize<Store>(storeDoc);
+//let rehydratedStore: Store = serializationRegistry.deserialize<Store>(storeDoc);
 
-console.log("rehydratedItem", rehydratedItem);
-console.log("rehydratedStore", rehydratedStore);
+
+//console.log("rehydratedStore", rehydratedStore);

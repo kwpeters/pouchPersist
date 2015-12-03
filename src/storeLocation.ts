@@ -1,35 +1,34 @@
-
 import {ISerializeInfo, ISerializable, ITrackDirty} from "./interfaces";
 import {SerializationRegistry} from "./serializationRegistry";
 
-const TYPE_ID_ITEM:string = "item";
+const TYPE_ID_STORELOCATION:string = "storelocation";
 
 
-function deserializeItem(schema:number, pojo:any): Item {
+function deserializeStoreLocation(schema:number, pojo:any): StoreLocation {
     "use strict";
 
-    let newItem: Item;
+    let newStoreLocation: StoreLocation;
 
     switch (schema) {
         case 1:
-            newItem = new Item(pojo.name);
+            newStoreLocation = new StoreLocation(pojo.name);
             break;
-        default:
-            throw new Error("Unknown Item schema " + schema);
 
+        default:
+            throw new Error("Unknown StoreLocation schema " + schema);
     }
 
-    return newItem;
+    return newStoreLocation;
 }
 
 
-export class Item implements ISerializable, ITrackDirty {
+export class StoreLocation implements ISerializable, ITrackDirty {
 
     private _name: string;
     private _isDirty: boolean;
 
     public static register(serializationRegistry:SerializationRegistry):void {
-        serializationRegistry.registerType(TYPE_ID_ITEM, deserializeItem);
+        serializationRegistry.registerType(TYPE_ID_STORELOCATION, deserializeStoreLocation);
     }
 
 
@@ -42,10 +41,11 @@ export class Item implements ISerializable, ITrackDirty {
         return this._name;
     }
 
+
     //region ISerializable /////////////////////////////////////////////////////
 
-    public getTypeId(): string{
-        return ;
+    public getTypeId(): string {
+        return TYPE_ID_STORELOCATION;
     }
 
     public serialize(): ISerializeInfo {

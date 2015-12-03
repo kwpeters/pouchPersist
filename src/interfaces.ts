@@ -35,3 +35,8 @@ export interface ISerializable {
 export interface IDeserializer<T extends ISerializable> {
     (schema: number, pojo: any): T;
 }
+
+export interface ITrackDirty {
+    isDirty():boolean;
+    setClean():void;
+}

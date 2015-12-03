@@ -19,6 +19,7 @@ export class SerializationRegistry {
         this._registry[typeId] = deserializer;
     }
 
+
     public serialize(obj: ISerializable):IDocument {
 
         // Build the document to be persisted.
