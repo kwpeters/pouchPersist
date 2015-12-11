@@ -51,7 +51,10 @@ var gulp        = require('gulp'),
                         noExternalResolve: true,
                         noEmitOnError:     true,
                         module:            'commonjs'
-                    }));
+                    },
+                    undefined,
+                    ts.reporter.longReporter()
+                ));
 
             defsStream = tsStreams.dts
                 .pipe(gulp.dest(buildSrcDir));
@@ -72,31 +75,44 @@ var gulp        = require('gulp'),
 (function () {
     "use strict";
 
-    gulp.task('ut-build', [], function () {
-        var ts = require('gulp-typescript'),
-            tsStreams,
-            inputTsFiles = ['src/**/*.ts', 'typings/**/*.d.ts'],
-            merged;
-
-        tsStreams = gulp.src(inputTsFiles, {base: 'src'})
-            .pipe(sourcemaps.init())
-            .pipe(ts({
-                target:            'ES5',
-                declarationFiles:  true,
-                noExternalResolve: true,
-                noEmitOnError:     true,
-                module:            'commonjs'
-            }));
-
-        merged = mergeStream(
-            tsStreams.dts.pipe(gulp.dest(buildUtDir)),
-            tsStreams.js.pipe(sourcemaps.write())
-                        .pipe(gulp.dest(buildUtDir))
-        );
-        return merged;
+    gulp.task('ut', function () {
+        return buildUnitTests()
+            .then(runUnitTests);
     });
 
-    gulp.task('ut', ['ut-build'], function () {
+    // Helper function that builds the unit tests.  Returns a promise.
+    function buildUnitTests() {
+        var ts           = require('gulp-typescript'),
+            tsHelpers    = require('./gulpHelpers/gulpTsHelpers'),
+            tsResults,
+            inputTsFiles = ['src/**/*.ts', 'typings/**/*.d.ts'],
+            merged,
+            tsPromise;
+
+        tsResults = gulp.src(inputTsFiles, {base: 'src'})
+            .pipe(sourcemaps.init())
+            .pipe(ts({
+                    target:            'ES5',
+                    declarationFiles:  true,
+                    noExternalResolve: true,
+                    noEmitOnError:     true,
+                    module:            'commonjs'
+                },
+                undefined,
+                ts.reporter.longReporter()));
+
+        merged = mergeStream(
+            tsResults.dts.pipe(gulp.dest(buildUtDir)),
+            tsResults.js.pipe(sourcemaps.write())
+                .pipe(gulp.dest(buildUtDir))
+        );
+
+        tsPromise = tsHelpers.processTsResults(tsResults, merged);
+        return tsPromise;
+    }
+
+    // Helper function that runs the unit tests.  Returns a promise.
+    function runUnitTests() {
         var q       = require('q'),
             exec    = require('child_process').exec,
             dfd     = q.defer(),
@@ -117,6 +133,6 @@ var gulp        = require('gulp'),
         });
 
         return dfd.promise;
-    });
+    }
 
 })();
