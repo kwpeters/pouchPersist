@@ -58,6 +58,12 @@ describe("SerializationRegistry", function ():void {
 
     });
 
+    it("should serialize an object graph with a cycle as expected",
+        function (): void {
+            expect(false).toBeTruthy();
+        }
+    );
+
     it("should deserialize as expected", function ():void {
         let json:string = `
         [
@@ -118,4 +124,10 @@ describe("SerializationRegistry", function ():void {
         expect(location1.getId()).toBe("storelocation/2015-12-11T02:20:12.313Z_4");
         expect(location2.getId()).toBe("storelocation/2015-12-11T02:20:12.314Z_5");
     });
+
+    it("should deserialize an object graph with a cycle as expected",
+        function (): void {
+            expect(false).toBeTruthy();
+        }
+    );
 });

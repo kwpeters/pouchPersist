@@ -85,9 +85,13 @@ export class Store implements ISerializable, ITrackDirty {
     public deserialize(schema: number, id:string, pojo:any): any[] {
         let pass2Funcs:{}[] = [];
 
+        //
+        // Schema 1
+        //
         if (schema === 1) {
             this._id = id;
             this._name = pojo.name;
+
             pass2Funcs.push(
                 (objIdMap:{}) => {
                     pojo.storeLocations.forEach((curStoreLocationId:string) => {
